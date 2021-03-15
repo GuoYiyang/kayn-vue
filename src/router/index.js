@@ -7,9 +7,8 @@ const Home = () => import('@/page/Home/home.vue')
 const GoodS = () => import('@/page/Goods/goods.vue')
 // const goodsDetails = () => import('/page/Goods/goodsDetails.vue')
 // const Thanks = () => import('/page/Thanks/thanks.vue')
-// const RefreshGoods = () => import('/page/Refresh/refreshgoods.vue')
+const RefreshGoods = () => import('@/page/Refresh/refreshgoods.vue')
 // const Cart = () => import('/page/Cart/cart.vue')
-// const RefreshSearch = () => import('/page/Refresh/refreshsearch.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -23,13 +22,13 @@ const routes = [
       {path: 'goods', component: GoodS},
       // {path: 'goodsDetails', name: 'goodsDetails', component: goodsDetails},
       // {path: 'thanks', name: 'thanks', component: Thanks},
-      // {path: '/refreshgoods', name: 'refreshgoods', component: RefreshGoods}
+      {path: '/refreshgoods', name: 'refreshgoods', component: RefreshGoods},
+
     ]
   },
   // {path: '/login', name: 'login', component: Login},
   // {path: '/register', name: 'register', component: Register},
   // {path: '/cart', name: 'cart', component: Cart},
-  // {path: '/refreshsearch', name: 'refreshsearch', component: RefreshSearch},
 ]
 
 const router = new VueRouter({

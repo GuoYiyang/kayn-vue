@@ -82,7 +82,8 @@
         sort: '',
         currentPage: 1,
         total: 0,
-        pageSize: 20
+        pageSize: 20,
+        key: ''
       }
     },
     methods: {
@@ -106,7 +107,7 @@
         }
         let params = {
           params: {
-            q: "iphone",
+            q: this.key,
             page: this.currentPage,
             size: this.pageSize,
             sort: this.sort,
@@ -160,6 +161,7 @@
     mounted () {
       this.windowHeight = window.innerHeight
       this.windowWidth = window.innerWidth
+      this.key = this.$route.query.key
       this._getAllGoods()
       recommend().then(res => {
         let data = res.result

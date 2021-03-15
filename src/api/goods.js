@@ -81,7 +81,7 @@ export const delOrder = (params) => {
 }
 // 商品列表
 export const getSearch = (params) => {
-  return http.fetchGet('/goods/search', params)
+  return http.fetchGet('/api/goods/search', params)
 }
 // 快速搜索
 export const getQuickSearch = (params) => {

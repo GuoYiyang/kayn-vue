@@ -4,29 +4,30 @@
       <header class="w">
         <div class="w-box">
           <div class="nav-logo">
-            <h1 @click="changePage(-1)">
-              <router-link to="/" title="XMall商城官网">XMall商城</router-link>
+            <h1 @click="changePage(-1)"style="color:#ffffff;">
+              Kayn商城推荐系统
             </h1>
           </div>
           <div class="right-box">
             <div class="nav-list">
-              <el-autocomplete
+              <el-input
                 placeholder="请输入商品信息"
-                icon="search"
                 v-model="input"
                 minlength=1
                 maxlength=100
-                :fetch-suggestions="querySearchAsync"
-                @select="handleSelect"
-                :on-icon-click="handleIconClick"
                 @keydown.enter.native="handleIconClick">
-              </el-autocomplete>
+                <i class="el-icon-search el-input__icon"
+                   slot="suffix"
+                   @click="handleIconClick">
+                </i>
+              </el-input>
               <router-link to="/goods"><a @click="changePage(2)">全部商品</a></router-link>
               <router-link to="/thanks"><a @click="changePage(4)">捐赠</a></router-link>
             </div>
             <div class="nav-aside" ref="aside" :class="{fixed:st}">
               <div class="user pr">
-                <router-link to="/user">个人中心</router-link>
+
+                <router-link to="/user"><h1>个人中心</h1></router-link>
                 <!--用户信息显示-->
                 <div class="nav-user-wrapper pa" v-if="login">
                   <div class="nav-user-list">
@@ -175,7 +176,7 @@
       ]),
       // 计算价格
       totalPrice () {
-        var totalPrice = 0
+        let totalPrice = 0
         this.cartList && this.cartList.forEach(item => {
           totalPrice += (item.productNum * item.salePrice)
         })
@@ -192,17 +193,17 @@
     },
     methods: {
       ...mapMutations(['ADD_CART', 'INIT_BUYCART', 'ADD_ANIMATION', 'SHOW_CART', 'REDUCE_CART', 'RECORD_USERINFO', 'EDIT_CART']),
-      handleIconClick (ev) {
-        if (this.$route.path === '/search') {
+      handleIconClick () {
+        if (this.$route.path === '/goods') {
           this.$router.push({
-            path: '/refreshsearch',
+            path: '/refreshgoods',
             query: {
               key: this.input
             }
           })
         } else {
           this.$router.push({
-            path: '/search',
+            path: '/goods',
             query: {
               key: this.input
             }
