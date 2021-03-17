@@ -8,6 +8,7 @@
       </div>
       <h6 class="good-title" v-html="msg.productName">{{msg.productName}}</h6>
       <h3 class="sub-title ellipsis">{{msg.subTitle}}</h3>
+      <!--   查看详情，加入购物车   -->
       <div class="good-price pr">
         <div class="ds pa">
           <a @click="openProduct(msg.productId)">
@@ -44,7 +45,7 @@
         this.$router.push({path: 'goodsDetails/productId=' + id})
       },
       openProduct (id) {
-        window.open('//' + window.location.host + '/#/goodsDetails?productId=' + id)
+        window.open('//' + window.location.host + '/goodsDetails?productId=' + id)
       },
       addCart (id, price, name, img) {
         if (!this.showMoveImg) {     // 动画是否在运动

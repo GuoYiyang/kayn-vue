@@ -160,7 +160,7 @@
       cursor: not-allowed;
     }
     .down, .up {
-      background: url(../../static/images/cart-updown_8303731e15@2x.jpg) no-repeat;
+      background: url(/static/images/cart-updown_8303731e15@2x.jpg) no-repeat;
       overflow: hidden;
       float: left;
       width: 34px;

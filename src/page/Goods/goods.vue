@@ -34,6 +34,7 @@
       </div>
       <div class="no-info" v-if="noResult">
         <div class="no-data">
+          <img src="/static/images/no-search.png">
           <br> 抱歉！暂时还没有该商品...
         </div>
 <!--        <section class="section">-->
@@ -46,7 +47,8 @@
       </div>
       <div class="no-info" v-if="error">
         <div class="no-data">
-          <br> 抱歉！出错了...
+          <img src="/static/images/error.png">
+          <br> 抱歉！出错了,请稍等后重试...
         </div>
 <!--        <section class="section">-->
 <!--          <y-shelf :title="recommendPanel.name">-->
@@ -120,10 +122,8 @@
           if (res.success === true) {
             this.total = res.result.total
             this.goods = res.result.data
-            this.noResult = false
-            if (this.total === 0) {
-              this.noResult = true
-            }
+
+            this.noResult = this.total === 0;
             this.error = false
           } else {
             this.error = true
@@ -161,7 +161,12 @@
     mounted () {
       this.windowHeight = window.innerHeight
       this.windowWidth = window.innerWidth
-      this.key = this.$route.query.key
+      if (this.$route.query.key) {
+        this.key = this.$route.query.key
+      } else {
+        this.key = '新品上市'
+      }
+
       this._getAllGoods()
       recommend().then(res => {
         let data = res.result

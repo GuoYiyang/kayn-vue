@@ -31,10 +31,6 @@ export const thanksList = (params) => {
 export const productHome = (params) => {
   return http.fetchGet('/api/goods/home', params)
 }
-// 首页接口
-export const navList = (params) => {
-  return http.fetchGet('/goods/navList', params)
-}
 // 推荐板块
 export const recommend = (params) => {
   return http.fetchGet('/goods/recommend', params)

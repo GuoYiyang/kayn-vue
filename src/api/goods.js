@@ -73,7 +73,7 @@ export const cancelOrder = (params) => {
 }
 // 商品详情
 export const productDet = (params) => {
-  return http.fetchGet('/goods/productDet', params)
+  return http.fetchGet('/api/goods/productDet', params)
 }
 // 删除订单
 export const delOrder = (params) => {
@@ -81,7 +81,7 @@ export const delOrder = (params) => {
 }
 // 商品列表
 export const getSearch = (params) => {
-  return http.fetchGet('/api/goods/search', params)
+  return http.fetchGet('/goods/search', params)
 }
 // 快速搜索
 export const getQuickSearch = (params) => {

@@ -21,8 +21,9 @@
                    @click="handleIconClick">
                 </i>
               </el-input>
+              <router-link to="/"><a @click="changePage(1)">首页</a></router-link>
               <router-link to="/goods"><a @click="changePage(2)">全部商品</a></router-link>
-              <router-link to="/thanks"><a @click="changePage(4)">捐赠</a></router-link>
+
             </div>
             <div class="nav-aside" ref="aside" :class="{fixed:st}">
               <div class="user pr">
@@ -62,7 +63,10 @@
                   </div>
                 </div>
               </div>
-              <div class="shop pr" @mouseover="cartShowState(true)" @mouseout="cartShowState(false)"
+              <div class="shop pr"
+                   @mouseover="cartShowState(true)"
+                   @mouseout="cartShowState(false)"
+                   @click="changePage(3)"
                    ref="positionMsg">
                 <router-link to="/cart"></router-link>
                 <span class="cart-num">
@@ -126,14 +130,17 @@
             <div class="w">
               <ul class="nav-list2">
                 <li>
-                  <router-link to="/"><a @click="changGoods(-1)" :class="{active:choosePage===-1}">首页</a></router-link>
+                  <a @click="changGoods(1)" :class="{active:choosePage===1}">首页</a>
                 </li>
                 <li>
-                  <a @click="changGoods(-2)" :class="{active:choosePage===-2}">全部</a>
+                  <a @click="changGoods(2)" :class="{active:choosePage===2}">全部</a>
                 </li>
-                <li v-for="(item,i) in navList" :key="i">
-                  <a @click="changGoods(i, item)" :class="{active:i===choosePage}">{{item.picUrl}}</a>
+                <li>
+                  <a @click="changGoods(3)" :class="{active:choosePage===3}">购物车</a>
                 </li>
+<!--                <li v-for="(item,i) in navList" :key="i">-->
+<!--                  <a @click="changGoods(i, item)" :class="{active:i===choosePage}">{{item.picUrl}}</a>-->
+<!--                </li>-->
               </ul>
               <div></div>
             </div>
@@ -147,7 +154,7 @@
   import YButton from '@/components/YButton'
   import { mapMutations, mapState } from 'vuex'
   import { getCartList, cartDel, getQuickSearch } from '@/api/goods'
-  import { loginOut, navList } from '@/api/index'
+  import { loginOut } from '@/api'
   import { setStore, getStore, removeStore } from '@/utils/storage'
   import store from '../store/'
   import 'element-ui/lib/theme-chalk/index.css'
@@ -163,7 +170,7 @@
         positionT: 0,
         timerCartShow: null, // 定时隐藏购物车
         input: '',
-        choosePage: -1,
+        choosePage: 1,
         searchResults: [],
         timeout: null,
         token: '',
@@ -221,15 +228,20 @@
       },
       changGoods (v, item) {
         this.changePage(v)
-        if (v === -1) {
+        if (v === 1) {
           this.$router.push({
             path: '/'
           })
-        } else if (v === -2) {
+        } else if (v === 2) {
           this.$router.push({
-            path: '/refreshgoods'
+            path: '/goods'
           })
-        } else {
+        } else if (v === 3) {
+          this.$router.push({
+            path: '/cart'
+          })
+        }
+        else {
           // 站内跳转
           if (item.type === 1) {
             window.location.href = item.fullUrl
@@ -357,14 +369,8 @@
       openProduct (productId) {
         window.open('//' + window.location.host + '/#/goodsDetails?productId=' + productId)
       },
-      _getNavList () {
-        navList().then(res => {
-          this.navList = res.result
-        })
-      }
     },
     mounted () {
-      this._getNavList()
       this.token = getStore('token')
       if (this.login) {
         this._getCartList()
@@ -489,12 +495,11 @@
       display: flex;
       align-items: center;
       > a {
-        background: url(/static/images/global-logo-red@2x.png) no-repeat 50%;
         background-size: cover;
         display: block;
         @include wh(50px, 40px);
         text-indent: -9999px;
-        background-position: 0 0;
+        background: url(/static/images/global-logo-red@2x.png) no-repeat 0 0;
       }
     }
     .nav-list {
@@ -541,7 +546,6 @@
         width: 262px;
         position: fixed;
         left: 50%;
-        top: 19px;
         margin-left: 451px;
         margin-top: 0;
         z-index: 32;
@@ -700,9 +704,8 @@
           display: block;
           @include wh(30px, 100%);
           content: " ";
-          background: url(/static/images/account-icon@2x.32d87deb02b3d1c3cc5bcff0c26314ac.png) 0 -22px;
           background-size: 240px 107px;
-          background-position: -150px -22px;
+          background: url(/static/images/account-icon@2x.32d87deb02b3d1c3cc5bcff0c26314ac.png) -150px -22px;
         }
       }
       .cart-num {
@@ -792,7 +795,6 @@
             top: 0;
             bottom: 0;
             z-index: 2;
-            border: 1px solid #f0f0f0;
             border: 0 solid transparent;
             box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .06);
             border-radius: 3px;
