@@ -8,8 +8,9 @@
         <div class="account-sidebar">
           <div class="avatar gray-box ">
             <div>
-              <img :src="userInfo.info.file"> <h5>
-              {{userInfo.info.username}}</h5></div>
+              <img :src="userInfo.info.file">
+              <h5>{{userInfo.info.username}}</h5>
+            </div>
             <div class="box-inner">
               <ul class="account-nav">
                 <li v-for="(item,i) in nav" :key='i' :class="{current:item.name===title}"
@@ -38,8 +39,8 @@
       return {
         title: '我的订单',
         nav: [
-          {name: '我的订单', path: 'orderList'},
           {name: '账户资料', path: 'information'},
+          {name: '我的订单', path: 'orderList'},
           {name: '收货地址', path: 'addressList'},
         ],
         editAvatar: true

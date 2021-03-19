@@ -42,22 +42,16 @@
                         <p class="name">{{userInfo.info.username}}</p>
                       </li>
                       <li>
-                        <router-link to="/user/orderList">我的订单</router-link>
+                        <router-link to="/user/information">账号资料</router-link>
                       </li>
                       <li>
-                        <router-link to="/user/information">账号资料</router-link>
+                        <router-link to="/user/orderList">我的订单</router-link>
                       </li>
                       <li>
                         <router-link to="/user/addressList">收货地址</router-link>
                       </li>
                       <li>
-                        <router-link to="/user/support">售后服务</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/user/coupon">我的优惠</router-link>
-                      </li>
-                      <li>
-                        <a href="javascript:;" @click="_loginOut">退出</a>
+                        <a href="javascript:" @click="_loginOut">退出</a>
                       </li>
                     </ul>
                   </div>
@@ -138,9 +132,6 @@
                 <li>
                   <a @click="changGoods(3)" :class="{active:choosePage===3}">购物车</a>
                 </li>
-<!--                <li v-for="(item,i) in navList" :key="i">-->
-<!--                  <a @click="changGoods(i, item)" :class="{active:i===choosePage}">{{item.picUrl}}</a>-->
-<!--                </li>-->
               </ul>
               <div></div>
             </div>
@@ -351,6 +342,7 @@
         }
         loginOut(params).then(res => {
           removeStore('buyCart')
+          removeStore('token')
           window.location.href = '/'
         })
       },
@@ -367,7 +359,7 @@
         }
       },
       openProduct (productId) {
-        window.open('//' + window.location.host + '/#/goodsDetails?productId=' + productId)
+        window.open('//' + window.location.host + '/goodsDetails?productId=' + productId)
       },
     },
     mounted () {

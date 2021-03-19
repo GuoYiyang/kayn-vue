@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 const Index = () => import('@/page/index.vue')
-// const Login = () => import('/page/Login/login.vue')
-// const Register = () => import('/page/Login/register.vue')
+const Login = () => import('@/page/Login/login.vue')
+const Register = () => import('@/page/Login/register.vue')
 const Home = () => import('@/page/Home/home.vue')
 const GoodS = () => import('@/page/Goods/goods.vue')
 const goodsDetails = () => import('@/page/Goods/goodsDetails.vue')
@@ -35,7 +35,7 @@ const routes = [
     path: '/user',
     name: 'user',
     component: user,
-    redirect: '/user/orderList',
+    redirect: '/user/information',
     children: [
       {path: 'orderList', name: '订单列表', component: orderList},
       {path: 'orderDetail', name: '订单详情', component: orderDetail},
@@ -43,8 +43,8 @@ const routes = [
       {path: 'addressList', name: '收货地址', component: addressList},
     ]
   },
-  // {path: '/login', name: 'login', component: Login},
-  // {path: '/register', name: 'register', component: Register},
+  {path: '/login', name: 'login', component: Login},
+  {path: '/register', name: 'register', component: Register},
   {path: '*', redirect: '/home'}
 
 ]

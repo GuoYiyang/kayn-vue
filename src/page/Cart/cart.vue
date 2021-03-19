@@ -110,7 +110,7 @@
         </div>
       </div>
     </div>
-    <y-footer></y-footer>
+<!--    <y-footer></y-footer>-->
   </div>
 </template>
 <script>
