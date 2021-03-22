@@ -9,7 +9,7 @@ export const getCartList = (params) => {
 }
 // 加入购物车
 export const addCart = (params) => {
-  return http.fetchPost('/api/member/addCart', params)
+  return http.fetchPost('/api/cart/addCart', params)
 }
 // 删除购物车
 export const delCart = (params) => {
@@ -34,10 +34,6 @@ export const cartDel = (params) => {
 // 获取用户地址
 export const addressList = (params) => {
   return http.fetchPost('/member/addressList', params)
-}
-// 通过id获取地址
-export const getAddress = (params) => {
-  return http.fetchPost('/member/address', params)
 }
 // 修改收货地址
 export const addressUpdate = (params) => {

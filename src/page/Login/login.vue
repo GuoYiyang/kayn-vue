@@ -127,11 +127,11 @@ export default {
     // 登陆时将本地的添加到用户购物车
     login_addCart () {
       let cartArr = []
-      let locaCart = JSON.parse(getStore('buyCart'))
-      if (locaCart && locaCart.length) {
-        locaCart.forEach(item => {
+      let localCart = JSON.parse(getStore('buyCart'))
+      if (localCart && localCart.length) {
+        localCart.forEach(item => {
           cartArr.push({
-            userId: getStore('userId'),
+            username: getStore('username'),
             productId: item.productId,
             productNum: item.productNum
           })
@@ -157,7 +157,7 @@ export default {
           return false
         } else {
           setStore('token', res.result.token)
-          setStore('userId', res.result.id)
+          setStore('username', res.result.username)
           // 登录后添加当前缓存中的购物车
           if (this.cart.length) {
             for (let i = 0; i < this.cart.length; i++) {
@@ -182,7 +182,7 @@ export default {
   mounted () {
     this.getRemembered()
     this.login_addCart()
-    this.open('登录提示', '测试体验账号密码：test | test')
+    // this.open('登录提示', '测试体验账号密码：test | test')
   },
   components: {
     YFooter,

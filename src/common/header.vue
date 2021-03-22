@@ -147,7 +147,6 @@
   import { getCartList, cartDel, getQuickSearch } from '@/api/goods'
   import { loginOut } from '@/api'
   import { setStore, getStore, removeStore } from '@/utils/storage'
-  import store from '../store/'
   import 'element-ui/lib/theme-chalk/index.css'
   export default{
     data () {

@@ -11,21 +11,13 @@ export const loginOut = (params) => {
 export const userInfo = (params) => {
   return http.fetchGet('/api/checkLogin', params)
 }
+// 用户信息修改
+export const userEdit = (params) => {
+  return http.fetchPost('/api/user/edit', params)
+}
 // 注册账号
 export const register = (params) => {
   return http.fetchPost('/api/register', params)
-}
-// 上传图片
-export const upload = (params) => {
-  return http.fetchPost('/member/imgaeUpload', params)
-}
-// 修改头像
-export const updateheadimage = (params) => {
-  return http.fetchPost('/member/updateheadimage', params)
-}
-// 捐赠列表
-export const thanksList = (params) => {
-  return http.fetchGet('/member/thanks', params)
 }
 // 首页接口
 export const productHome = (params) => {
@@ -35,8 +27,5 @@ export const productHome = (params) => {
 export const recommend = (params) => {
   return http.fetchGet('/goods/recommend', params)
 }
-// 捐赠板块
-export const thank = (params) => {
-  return http.fetchGet('/goods/thank', params)
-}
+
 
