@@ -29,23 +29,23 @@ export const editCheckAll = (params) => {
 }
 // 删除整条购物车
 export const cartDel = (params) => {
-  return http.fetchPost('/member/cartDel', params)
+  return http.fetchPost('/api/cart/cartDel', params)
 }
 // 获取用户地址
 export const addressList = (params) => {
-  return http.fetchPost('/member/addressList', params)
+  return http.fetchPost('/api/address/addressList', params)
 }
 // 修改收货地址
 export const addressUpdate = (params) => {
-  return http.fetchPost('/member/updateAddress', params)
+  return http.fetchPost('/api/address/updateAddress', params)
 }
 // 添加收货地址
 export const addressAdd = (params) => {
-  return http.fetchPost('/member/addAddress', params)
+  return http.fetchPost('/api/address/addAddress', params)
 }
 // 删除收货地址
 export const addressDel = (params) => {
-  return http.fetchPost('/member/delAddress', params)
+  return http.fetchPost('/api/address/delAddress', params)
 }
 // 生成订单
 export const submitOrder = (params) => {

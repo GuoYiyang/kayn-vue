@@ -9,18 +9,18 @@
         </div>
         <div v-if="addList.length">
           <div class="address-item" v-for="(item,i) in addList" :key="i">
-            <div class="name">{{item.userName}}</div>
+            <div class="name">{{item.name}}</div>
             <div class="address-msg">{{item.streetName}}</div>
             <div class="telephone">{{item.tel}}</div>
-            <div class="defalut">
+            <div class="default">
               <a @click="changeDef(item)"
-                 href="javascript:;"
+                 href="javascript:"
                  v-text="item.isDefault?'( 默认地址 )':'设为默认'"
-                 :class="{'defalut-address':item.isDefault}"></a>
+                 :class="{'default-address':item.isDefault}"></a>
             </div>
             <div class="operation">
-              <el-button type="primary" icon="edit" size="small"  @click="update(item)"></el-button>
-              <el-button type="danger" icon="delete" size="small" :data-id="item.addressId" @click="del(item.addressId,i)"></el-button>
+              <el-button type="primary" icon="el-icon-edit" size="small"  @click="update(item)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" size="small" :data-id="item.addressId" @click="del(item.addressId,i)"></el-button>
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
     <y-popup :open="popupOpen" @close='popupOpen=false' :title="popupTitle">
       <div slot="content" class="md" :data-id="msg.addressId">
         <div>
-          <input type="text" placeholder="收货人姓名" v-model="msg.userName">
+          <input type="text" placeholder="收货人姓名" v-model="msg.name">
         </div>
         <div>
           <input type="number" placeholder="手机号码" v-model="msg.tel">
@@ -51,7 +51,14 @@
         <y-button text='保存'
                   class="btn"
                   :classStyle="btnHighlight?'main-btn':'disabled-btn'"
-                  @btnClick="save({userId:userId,addressId:msg.addressId,userName:msg.userName,tel:msg.tel,streetName:msg.streetName,isDefault:msg.isDefault})">
+                  @btnClick="save({
+                  username: username,
+                  addressId: msg.addressId,
+                  name: msg.name,
+                  tel: msg.tel,
+                  streetName: msg.streetName,
+                  isDefault: msg.isDefault
+                  })">
         </y-button>
       </div>
     </y-popup>
@@ -71,18 +78,18 @@
         popupTitle: '管理收货地址',
         msg: {
           addressId: '',
-          userName: '',
+          name: '',
           tel: '',
           streetName: '',
           isDefault: false
         },
-        userId: ''
+        username: ''
       }
     },
     computed: {
       btnHighlight () {
         let msg = this.msg
-        return msg.userName && msg.tel && msg.streetName
+        return msg.name && msg.tel && msg.streetName
       }
     },
     methods: {
@@ -92,7 +99,7 @@
         })
       },
       _addressList () {
-        addressList({userId: this.userId}).then(res => {
+        addressList({username: this.username}).then(res => {
           let data = res.result
           if (data.length) {
             this.addList = res.result
@@ -148,14 +155,14 @@
         this.popupOpen = true
         if (item) {
           this.popupTitle = '管理收货地址'
-          this.msg.userName = item.userName
+          this.msg.name = item.name
           this.msg.tel = item.tel
           this.msg.streetName = item.streetName
           this.msg.isDefault = item.isDefault
           this.msg.addressId = item.addressId
         } else {
           this.popupTitle = '新增收货地址'
-          this.msg.userName = ''
+          this.msg.name = ''
           this.msg.tel = ''
           this.msg.streetName = ''
           this.msg.isDefault = false
@@ -164,7 +171,7 @@
       }
     },
     created () {
-      this.userId = getStore('userId')
+      this.username = getStore('username')
       this._addressList()
     },
     components: {
@@ -217,7 +224,7 @@
     .telephone {
       width: 160px;
     }
-    .defalut {
+    .default {
       width: 80px;
       > a {
         text-align: center;
@@ -231,7 +238,7 @@
       }
     }
     &:hover {
-      .defalut > a {
+      .default > a {
         display: block;
       }
     }
