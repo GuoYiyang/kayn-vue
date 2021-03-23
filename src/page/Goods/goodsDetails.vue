@@ -97,7 +97,14 @@
       addCart (id, price, name, img) {
         if (!this.showMoveImg) {     // 动画是否在运动
           if (this.login) { // 登录了 直接存在用户名下
-            addCart({username: this.username, productId: id, productNum: this.productNum}).then(res => {
+            addCart({
+              username: this.username,
+              productId: id,
+              salePrice: price,
+              productName: name,
+              productImg: img,
+              productNum: this.productNum
+            }).then(res => {
               // 并不重新请求数据
               this.ADD_CART({
                 productId: id,

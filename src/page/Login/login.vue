@@ -97,7 +97,7 @@ export default {
       })
     },
     getRemembered () {
-      var judge = getStore('remember')
+      let judge = getStore('remember')
       if (judge === 'true') {
         this.autoLogin = true
         this.ruleForm.userName = getStore('rusername')
@@ -182,7 +182,7 @@ export default {
   mounted () {
     this.getRemembered()
     this.login_addCart()
-    // this.open('登录提示', '测试体验账号密码：test | test')
+    this.open('登录提示', '测试体验账号密码：admin | admin')
   },
   components: {
     YFooter,

@@ -92,7 +92,8 @@
                 <y-button :classStyle="checkNum > 0 && submit?'main-btn':'disabled-btn'"
                           class="big-main-btn"
                           style="margin: 0;width: 130px;height: 50px;line-height: 50px;font-size: 16px"
-                          :text="checkoutNow" @btnClick="checkout"></y-button>
+                          :text="checkoutNow" @btnClick="checkout">
+                </y-button>
               </div>
             </div>
           </div>
@@ -110,7 +111,6 @@
         </div>
       </div>
     </div>
-<!--    <y-footer></y-footer>-->
   </div>
 </template>
 <script>
@@ -124,7 +124,7 @@
   export default {
     data () {
       return {
-        userId: 0,
+        username: '',
         checkoutNow: '现在结算',
         submit: true
       }
@@ -139,7 +139,7 @@
       },
       // 勾选的数量
       checkedCount () {
-        var i = 0
+        let i = 0
         this.cartList && this.cartList.forEach((item) => {
           if (item.checked === '1') i++
         })
@@ -147,7 +147,7 @@
       },
       // 计算总数量
       totalNum () {
-        var totalNum = 0
+        let totalNum = 0
         this.cartList && this.cartList.forEach(item => {
           totalNum += (item.productNum)
         })
@@ -155,17 +155,17 @@
       },
       // 选中的总价格
       checkPrice () {
-        var totalPrice = 0
+        let totalPrice = 0
         this.cartList && this.cartList.forEach(item => {
           if (item.checked === '1') {
             totalPrice += (item.productNum * item.salePrice)
           }
         })
-        return totalPrice
+        return totalPrice.toFixed(2)
       },
       // 选中的商品数量
       checkNum () {
-        var checkNum = 0
+        let checkNum = 0
         this.cartList && this.cartList.forEach(item => {
           if (item.checked === '1') {
             checkNum += (item.productNum)
@@ -189,28 +189,26 @@
       // 全选
       editCheckAll () {
         let checkAll = !this.checkAllFlag
-        editCheckAll({userId: this.userId, checked: checkAll}).then(res => {
+        editCheckAll({username: this.username, checked: checkAll}).then(res => {
           this.EDIT_CART({checked: checkAll})
         })
       },
       // 修改购物车
-      _cartEdit (userId, productId, productNum, checked) {
+      _cartEdit (username, productId, productNum, checked) {
         cartEdit(
           {
-            userId,
+            username,
             productId,
             productNum,
             checked
           }
         ).then(res => {
           if (res.success === true) {
-            this.EDIT_CART(
-              {
+            this.EDIT_CART({
                 productId,
                 checked,
                 productNum
-              }
-            )
+              })
           }
         })
       },
@@ -223,18 +221,18 @@
           // 勾选
           if (type === 'check') {
             let newChecked = checked === '1' ? '0' : '1'
-            this._cartEdit(this.userId, productId, productNum, newChecked)
+            this._cartEdit(this.username, productId, productNum, newChecked)
           }
         } else {
           console.log('缺少所需参数')
         }
       },
       EditNum (productNum, productId, checked) { // 数量
-        this._cartEdit(this.userId, productId, productNum, checked)
+        this._cartEdit(this.username, productId, productNum, checked)
       },
       // 删除整条购物车
       cartdel (productId) {
-        cartDel({userId: this.userId, productId}).then(res => {
+        cartDel({username: this.username, productId}).then(res => {
           this.EDIT_CART({productId})
         })
       },
@@ -254,7 +252,7 @@
             })
           }
         })
-        delCartChecked({userId: this.userId}).then(res => {
+        delCartChecked({username: this.username}).then(res => {
           if (res.success !== true) {
             this.message('删除失败')
           }
@@ -262,7 +260,7 @@
       }
     },
     mounted () {
-      this.userId = getStore('userId')
+      this.username = getStore('username')
       this.INIT_BUYCART()
     },
     components: {

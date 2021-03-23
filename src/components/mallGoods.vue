@@ -50,14 +50,27 @@
       addCart (id, price, name, img) {
         if (!this.showMoveImg) {     // 动画是否在运动
           if (this.login) { // 登录了 直接存在用户名下
-            addCart({username: getStore('username'),
-                            productId: id,
-                            productNum: 1}).then(res => {
+            addCart({
+              username: getStore('username'),
+              productId: id,
+              salePrice: price,
+              productName: name,
+              productImg: img,
+              productNum: 1
+            }).then(res => {
               // 并不重新请求数据
-              this.ADD_CART({productId: id, salePrice: price, productName: name, productImg: img})
+              this.ADD_CART({
+                productId: id,
+                salePrice: price,
+                productName: name,
+                productImg: img})
             })
           } else { // 未登录 vuex
-            this.ADD_CART({productId: id, salePrice: price, productName: name, productImg: img})
+            this.ADD_CART({
+              productId: id,
+              salePrice: price,
+              productName: name,
+              productImg: img})
           }
           // 加入购物车动画
           let dom = event.target

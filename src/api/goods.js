@@ -5,7 +5,7 @@ export const getAllGoods = (params) => {
 }
 // 获取购物车列表
 export const getCartList = (params) => {
-  return http.fetchPost('/member/cartList', params)
+  return http.fetchPost('/api/cart/cartList', params)
 }
 // 加入购物车
 export const addCart = (params) => {
@@ -21,11 +21,11 @@ export const delCartChecked = (params) => {
 }
 // 编辑购物车
 export const cartEdit = (params) => {
-  return http.fetchPost('/member/cartEdit', params)
+  return http.fetchPost('/api/cart/cartEdit', params)
 }
 // 全选
 export const editCheckAll = (params) => {
-  return http.fetchPost('/member/editCheckAll', params)
+  return http.fetchPost('/api/cart/editCheckAll', params)
 }
 // 删除整条购物车
 export const cartDel = (params) => {

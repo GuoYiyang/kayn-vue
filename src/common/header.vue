@@ -177,11 +177,11 @@
         this.cartList && this.cartList.forEach(item => {
           totalPrice += (item.productNum * item.salePrice)
         })
-        return totalPrice
+        return totalPrice.toFixed(2)
       },
       // 计算数量
       totalNum () {
-        var totalNum = 0
+        let totalNum = 0
         this.cartList && this.cartList.forEach(item => {
           totalNum += (item.productNum)
         })
@@ -256,13 +256,13 @@
             this.showError(res.error.reason)
             return
           }
-          var array = []
-          var maxSize = 5
+          let array = []
+          let maxSize = 5
           if (res.hits.hits.length <= 5) {
             maxSize = res.hits.hits.length
           }
-          for (var i = 0; i < maxSize; i++) {
-            var obj = {}
+          for (let i = 0; i < maxSize; i++) {
+            let obj = {}
             obj.value = res.hits.hits[i]._source.productName
             array.push(obj)
           }
@@ -298,7 +298,7 @@
       },
       // 登陆时获取一次购物车商品
       _getCartList () {
-        getCartList({userId: getStore('userId')}).then(res => {
+        getCartList({username: getStore('username')}).then(res => {
           if (res.success === true) {
             setStore('buyCart', res.result)
           }
