@@ -164,7 +164,7 @@
       if (this.$route.query.key) {
         this.key = this.$route.query.key
       } else {
-        this.key = '新品上市'
+        this.key = '苹果手机'
       }
 
       this._getAllGoods()

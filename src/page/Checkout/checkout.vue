@@ -9,7 +9,7 @@
                 :key="i"
                 class="address pr"
                 :class="{checked:addressId === item.addressId}"
-                @click="chooseAddress(item.addressId, item.userName, item.tel, item.streetName)">
+                @click="chooseAddress(item.addressId, item.name, item.tel, item.streetName)">
            <span v-if="addressId === item.addressId" class="pa">
              <svg viewBox="0 0 1473 1024" width="17.34375" height="12">
              <path
@@ -18,7 +18,7 @@
                </path>
              </svg>
              </span>
-              <p>收货人: {{item.userName}} {{item.isDefault ? '(默认地址)' : ''}}</p>
+              <p>收货人: {{item.name}} {{item.isDefault ? '(默认地址)' : ''}}</p>
               <p class="street-name ellipsis">收货地址: {{item.streetName}}</p>
               <p>手机号码: {{item.tel}}</p>
               <div class="operation-section">
@@ -47,7 +47,7 @@
                 <span class="price">单价</span>
               </div>
               <!--列表-->
-              <div class="cart-table" v-for="(item,i) in cartList" :key="i" v-if="item.checked === '1'">
+              <div class="cart-table" v-for="(item,i) in cartList" :key="i" v-if="item.checked === 1">
                 <div class="cart-group divide pr" :data-productid="item.productId">
                   <div class="cart-top-items">
                     <div class="cart-items clearfix">
@@ -62,9 +62,6 @@
                         <div class="name-table">
                           <a @click="goodsDetails(item.productId)" :title="item.productName" target="_blank"
                              v-text="item.productName"></a>
-                          <!-- <ul class="attribute">
-                            <li>白色</li>
-                          </ul> -->
                         </div>
                       </div>
                       <!--商品数量-->
@@ -109,7 +106,7 @@
       <y-popup :open="popupOpen" @close='popupOpen=false' :title="popupTitle">
         <div slot="content" class="md" :data-id="msg.addressId">
           <div>
-            <input type="text" placeholder="收货人姓名" v-model="msg.userName">
+            <input type="text" placeholder="收货人姓名" v-model="msg.name">
           </div>
           <div>
             <input type="number" placeholder="手机号码" v-model="msg.tel">
@@ -123,7 +120,14 @@
           <y-button text='保存'
                     class="btn"
                     :classStyle="btnHighlight?'main-btn':'disabled-btn'"
-                    @btnClick="save({userId:userId,addressId:msg.addressId,userName:msg.userName,tel:msg.tel,streetName:msg.streetName,isDefault:msg.isDefault})">
+                    @btnClick="save({
+                    username: username,
+                    addressId: msg.addressId,
+                    name: msg.name,
+                    tel: msg.tel,
+                    streetName: msg.streetName,
+                    isDefault: msg.isDefault
+                    })">
           </y-button>
         </div>
       </y-popup>
@@ -151,7 +155,7 @@
         productId: '',
         msg: {
           addressId: '',
-          userName: '',
+          name: '',
           tel: '',
           streetName: '',
           isDefault: false
@@ -159,7 +163,7 @@
         userName: '',
         tel: '',
         streetName: '',
-        userId: '',
+        username: '',
         orderTotal: 0,
         submit: false,
         submitOrder: '提交订单'
@@ -168,13 +172,13 @@
     computed: {
       btnHighlight () {
         let msg = this.msg
-        return msg.userName && msg.tel && msg.streetName
+        return msg.name && msg.tel && msg.streetName
       },
       // 选中的总价格
       checkPrice () {
         let totalPrice = 0
         this.cartList && this.cartList.forEach(item => {
-          if (item.checked === '1') {
+          if (item.checked === 1) {
             totalPrice += (item.productNum * item.salePrice)
           }
         })
@@ -192,12 +196,12 @@
         window.open(window.location.origin + '#/goodsDetails?productId=' + id)
       },
       _getCartList () {
-        getCartList({userId: this.userId}).then(res => {
+        getCartList({username: this.username}).then(res => {
           this.cartList = res.result
         })
       },
       _addressList () {
-        addressList({userId: this.userId}).then(res => {
+        addressList({username: this.username}).then(res => {
           let data = res.result
           if (data.length) {
             this.addList = data
@@ -233,7 +237,7 @@
       _submitOrder () {
         this.submitOrder = '提交订单中...'
         this.submit = true
-        var array = []
+        let array = []
         if (this.addressId === '0') {
           this.message('请选择收货地址')
           this.submitOrder = '提交订单'
@@ -246,13 +250,13 @@
           this.submit = false
           return
         }
-        for (var i = 0; i < this.cartList.length; i++) {
-          if (this.cartList[i].checked === '1') {
+        for (let i = 0; i < this.cartList.length; i++) {
+          if (this.cartList[i].checked === 1) {
             array.push(this.cartList[i])
           }
         }
         let params = {
-          userId: this.userId,
+          username: this.username,
           tel: this.tel,
           userName: this.userName,
           streetName: this.streetName,
@@ -268,15 +272,13 @@
             this.submit = false
           }
         })
+        this._getCartList()
       },
       // 付款
       payment (orderId) {
         // 需要拿到地址id
         this.$router.push({
-          path: '/order/payment',
-          query: {
-            'orderId': orderId
-          }
+          path: '/user/orderList'
         })
       },
       // 选择地址
@@ -291,14 +293,14 @@
         this.popupOpen = true
         if (item) {
           this.popupTitle = '管理收货地址'
-          this.msg.userName = item.userName
+          this.msg.name = item.name
           this.msg.tel = item.tel
           this.msg.streetName = item.streetName
           this.msg.isDefault = item.isDefault
           this.msg.addressId = item.addressId
         } else {
           this.popupTitle = '新增收货地址'
-          this.msg.userName = ''
+          this.msg.name = ''
           this.msg.tel = ''
           this.msg.streetName = ''
           this.msg.isDefault = false
@@ -322,7 +324,7 @@
       _productDet (productId) {
         productDet({params: {productId}}).then(res => {
           let item = res.result
-          item.checked = '1'
+          item.checked = 1
           item.productImg = item.productImageBig
           item.productNum = this.num
           item.productPrice = item.salePrice
@@ -331,7 +333,7 @@
       }
     },
     created () {
-      this.userId = getStore('userId')
+      this.username = getStore('username')
       let query = this.$route.query
       if (query.productId && query.num) {
         this.productId = query.productId

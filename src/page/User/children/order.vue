@@ -1,6 +1,5 @@
 <template>
   <div>
-    订单
     <y-shelf title="我的订单">
       <div slot="content">
         <div v-loading="loading" element-loading-text="加载中..." v-if="orderList.length" style="min-height: 10vw;">
@@ -8,13 +7,12 @@
             <div class="gray-sub-title cart-title">
               <div class="first">
                 <div>
-                  <span class="date" v-text="item.createDate"></span>
+                  <span class="date" v-text="new Date(item.createDate)"></span>
                   <span class="order-id"> 订单号： <a @click="orderDetail(item.orderId)">{{item.orderId}}</a> </span>
                 </div>
                 <div class="f-bc">
                   <span class="price">单价</span>
                   <span class="num">数量</span>
-                  <span class="operation">商品操作</span>
                 </div>
               </div>
               <div class="last">
@@ -33,8 +31,9 @@
                     <div>¥ {{Number(good.salePrice).toFixed(2)}}</div>
                     <div class="num">{{good.productNum}}</div>
                     <div class="type">
-                      <el-button style="margin-left:20px" @click="_delOrder(item.orderId,i)" type="danger" size="small" v-if="j<1" class="del-order">删除此订单</el-button>
-                      <!-- <a @click="_delOrder(item.orderId,i)" href="javascript:;" v-if="j<1" class="del-order">删除此订单</a> -->
+                      <el-popconfirm title="确定删除该订单吗？"  @confirm="_delOrder(item.orderId,i)">
+                        <el-button style="margin-left:20px" slot="reference" type="danger" size="small" v-if="j<1" class="del-order">删除此订单</el-button>
+                      </el-popconfirm>
                     </div>
                   </div>
                 </div>
@@ -42,6 +41,7 @@
                   <span></span>
                   <span></span>
                 </div>
+
               </div>
               <div class="prod-operation pa" style="right: 0;top: 0;">
                 <div class="total">¥ {{item.orderTotal}}</div>
@@ -86,7 +86,8 @@
         loading: true,
         currentPage: 1,
         pageSize: 5,
-        total: 0
+        total: 0,
+        username: ''
       }
     },
     methods: {
@@ -104,10 +105,10 @@
         this._orderList()
       },
       orderPayment (orderId) {
-        window.open(window.location.origin + '#/order/payment?orderId=' + orderId)
+        window.open(window.location.origin + '/order/payment?orderId=' + orderId)
       },
       goodsDetails (id) {
-        window.open(window.location.origin + '#/goodsDetails?productId=' + id)
+        window.open(window.location.origin + '/goodsDetails?productId=' + id)
       },
       orderDetail (orderId) {
         this.$router.push({
@@ -135,7 +136,7 @@
       _orderList () {
         let params = {
           params: {
-            userId: this.userId,
+            username: this.username,
             size: this.pageSize,
             page: this.currentPage
           }
@@ -162,7 +163,7 @@
       }
     },
     created () {
-      this.userId = getStore('userId')
+      this.username = getStore('username')
       this._orderList()
     },
     components: {

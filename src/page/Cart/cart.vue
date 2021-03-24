@@ -33,9 +33,6 @@
                         <div class="name-table">
                           <a @click="goodsDetails(item.productId)" :title="item.productName" target="_blank"
                              v-text="item.productName"></a>
-                          <ul class="attribute">
-                            <li>白色</li>
-                          </ul>
                         </div>
                       </div>
                       <!--删除按钮-->
@@ -242,10 +239,10 @@
         this.$router.push({path: 'checkout'})
       },
       delChecked () {
-        getCartList({userId: getStore('userId')}).then(res => {
+        getCartList({username: getStore('username')}).then(res => {
           if (res.success === true) {
             res.result.forEach(item => {
-              if (item.checked === '1') {
+              if (item.checked === 1) {
                 let productId = item.productId
                 this.EDIT_CART({productId})
               }
@@ -371,7 +368,7 @@
         .subtotal {
           overflow: hidden;
           float: right;
-          width: 137px;
+          width: 150px;
           text-align: center;
           color: #666;
           line-height: 140px;

@@ -17,7 +17,7 @@ export const delCart = (params) => {
 }
 // 删除购物车勾选商品
 export const delCartChecked = (params) => {
-  return http.fetchPost('/member/delCartChecked', params)
+  return http.fetchPost('/api/cart/delCartChecked', params)
 }
 // 编辑购物车
 export const cartEdit = (params) => {
@@ -49,7 +49,7 @@ export const addressDel = (params) => {
 }
 // 生成订单
 export const submitOrder = (params) => {
-  return http.fetchPost('/member/addOrder', params)
+  return http.fetchPost('/api/order/addOrder', params)
 }
 // 支付
 export const payMent = (params) => {
@@ -57,15 +57,15 @@ export const payMent = (params) => {
 }
 // 获取用户订单
 export const orderList = (params) => {
-  return http.fetchGet('/member/orderList', params)
+  return http.fetchGet('/api/order/orderList', params)
 }
 // 获取单个订单详情
 export const getOrderDet = (params) => {
-  return http.fetchGet('/member/orderDetail', params)
+  return http.fetchGet('/api/order/orderDetail', params)
 }
 // 取消订单
 export const cancelOrder = (params) => {
-  return http.fetchPost('/member/cancelOrder', params)
+  return http.fetchPost('/api/order/cancelOrder', params)
 }
 // 商品详情
 export const productDet = (params) => {
@@ -73,7 +73,7 @@ export const productDet = (params) => {
 }
 // 删除订单
 export const delOrder = (params) => {
-  return http.fetchGet('/member/delOrder', params)
+  return http.fetchGet('/api/order/delOrder', params)
 }
 // 商品列表
 export const getSearch = (params) => {
