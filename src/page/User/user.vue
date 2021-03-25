@@ -8,7 +8,10 @@
         <div class="account-sidebar">
           <div class="avatar gray-box ">
             <div>
-              <img :src="userInfo.info.file">
+              <el-image
+                  style="width: 100px; height: 100px"
+                  :src="userInfo.info.file">
+              </el-image>
               <h5>{{userInfo.info.username}}</h5>
             </div>
             <div class="box-inner">

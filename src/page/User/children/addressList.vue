@@ -139,6 +139,7 @@
           delete p.addressId
           this._addressAdd(p)
         }
+        this.$message.success("修改成功")
       },
       // 删除
       del (addressId, i) {

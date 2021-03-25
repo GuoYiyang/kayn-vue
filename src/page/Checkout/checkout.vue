@@ -86,7 +86,7 @@
                 <div class="shipping">
                   <div class="shipping-box" style="padding: 0 40px;">
                     <div class="shipping-total shipping-price"><h4
-                      class="highlight">应付总额：<em>￥{{checkPrice}}</em>
+                      class="highlight">应付总额：<em>￥{{checkPrice.toFixed(2)}}</em>
                     </h4>
                     </div>
                   </div>

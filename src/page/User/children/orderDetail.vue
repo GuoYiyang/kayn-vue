@@ -4,7 +4,7 @@
       <div slot="content">
         <div v-loading="loading" element-loading-text="加载中..." style="min-height: 10vw;" v-if="orderList.length">
 
-          <div class="status-now" v-if="orderStatus === 1">
+          <div class="status-now" v-if="orderStatus === 0">
             <ul>
               <li class="status-title"><h3>订单状态：待付款</h3></li>
               <li class="button">
@@ -13,15 +13,15 @@
               </li>
             </ul>
             <p class="realtime">
-              <span>您的付款时间还有 </span>
+              <span>您的付款截止日期为 </span>
               <span class="red">
-                <countDown v-bind:endTime="countTime" endText="已结束"></countDown>
+                {{new Date(this.endTime)}}
               </span>
               <span>，超时后订单将自动取消。</span>
             </p>
           </div>
 
-          <div class="status-now" v-if="orderStatus === 2">
+          <div class="status-now" v-if="orderStatus === 1">
             <ul>
               <li class="status-title"><h3>订单状态：已完成</h3></li>
             </ul>
@@ -106,7 +106,6 @@
   import { getOrderDet, cancelOrder } from '@/api/goods'
   import YShelf from '@/components/shelf'
   import { getStore } from '@/utils/storage'
-  import countDown from '@/components/countDown'
   export default {
     data () {
       return {
@@ -119,12 +118,12 @@
         streetName: '',
         orderTitle: '',
         createTime: '',
+        endTime: '',
         payTime: '',
         closeTime: '',
         finishTime: '',
         orderTotal: '',
         loading: true,
-        countTime: 0
       }
     },
     methods: {
@@ -146,22 +145,16 @@
           }
         }
         getOrderDet(params).then(res => {
-          if (res.result.orderStatus === 0) {
-            this.orderStatus = 1
-          } else if (res.result.orderStatus === 1) {
-            this.orderStatus = 2
-          } else if (res.result.orderStatus === -1) {
-            this.orderStatus = -1
-          }
+          this.orderStatus = res.result.orderStatus
           this.orderList = res.result.goodsList
           this.orderTotal = res.result.orderTotal
           this.name = res.result.addressInfo.name
           this.tel = res.result.addressInfo.tel
           this.streetName = res.result.addressInfo.streetName
           this.createTime = res.result.createDate
+          this.endTime = res.result.endDate
           this.closeTime = res.result.closeDate
           this.payTime = res.result.payDate
-          this.countTime = res.result.finishDate.toString()
           this.loading = false
         })
       },
@@ -183,8 +176,7 @@
       this._getOrderDet()
     },
     components: {
-      YShelf,
-      countDown
+      YShelf
     }
   }
 </script>

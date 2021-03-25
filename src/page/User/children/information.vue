@@ -3,7 +3,7 @@
     <y-shelf title="账户资料">
       <div slot="content">
         <div class="avatar-box">
-          <el-form ref="form" :model="form" label-width="80px">
+          <el-form ref="form" label-width="80px">
             <el-form-item label="用户名">
               <el-input v-model="user.username" readonly></el-input>
             </el-form-item>
@@ -18,6 +18,9 @@
                 <el-radio label="男" value="男"></el-radio>
                 <el-radio label="女" value="女"></el-radio>
               </el-radio-group>
+            </el-form-item>
+            <el-form-item label="头像">
+              <el-input v-model="user.file"></el-input>
             </el-form-item>
             <el-form-item label="地址">
               <el-input v-model="user.address"></el-input>
