@@ -239,19 +239,11 @@
         this.$router.push({path: 'checkout'})
       },
       delChecked () {
-        getCartList({username: getStore('username')}).then(res => {
-          if (res.success === true) {
-            res.result.forEach(item => {
-              if (item.checked === 1) {
-                let productId = item.productId
-                this.EDIT_CART({productId})
-              }
-            })
-          }
-        })
         delCartChecked({username: this.username}).then(res => {
           if (res.success !== true) {
             this.message('删除失败')
+          } else {
+            location.reload()
           }
         })
       }
