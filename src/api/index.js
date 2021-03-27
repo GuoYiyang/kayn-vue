@@ -25,7 +25,7 @@ export const productHome = (params) => {
 }
 // 推荐板块
 export const recommend = (params) => {
-  return http.fetchGet('/goods/recommend', params)
+  return http.fetchGet('/api/goods/recommend', params)
 }
 
 

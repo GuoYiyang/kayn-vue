@@ -11,10 +11,6 @@ export const getCartList = (params) => {
 export const addCart = (params) => {
   return http.fetchPost('/api/cart/addCart', params)
 }
-// 删除购物车
-export const delCart = (params) => {
-  return http.fetchPost('/member/delCart', params)
-}
 // 删除购物车勾选商品
 export const delCartChecked = (params) => {
   return http.fetchPost('/api/cart/delCartChecked', params)
@@ -74,12 +70,4 @@ export const productDet = (params) => {
 // 删除订单
 export const delOrder = (params) => {
   return http.fetchGet('/api/order/delOrder', params)
-}
-// 商品列表
-export const getSearch = (params) => {
-  return http.fetchGet('/goods/search', params)
-}
-// 快速搜索
-export const getQuickSearch = (params) => {
-  return http.fetchGet('/goods/quickSearch', params)
 }
