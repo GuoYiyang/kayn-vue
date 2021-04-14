@@ -158,14 +158,8 @@ export default {
         } else {
           setStore('token', res.result.token)
           setStore('username', res.result.username)
-          // 登录后添加当前缓存中的购物车
+          // 登录后清空当前缓存中的购物车
           if (this.cart.length) {
-            for (let i = 0; i < this.cart.length; i++) {
-              addCart(this.cart[i]).then(res => {
-                if (res.success === true) {
-                }
-              })
-            }
             removeStore('buyCart')
             this.$router.push({
               path: '/'

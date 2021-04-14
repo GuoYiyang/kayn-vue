@@ -67,6 +67,7 @@
   import mallGoods from '@/components/mallGoods'
   import YButton from '@/components/YButton'
   import YShelf from '@/components/shelf'
+  import {getStore} from "@/utils/storage";
   export default {
     data () {
       return {
@@ -85,7 +86,8 @@
         currentPage: 1,
         total: 0,
         pageSize: 20,
-        key: ''
+        key: '',
+        username: ''
       }
     },
     methods: {
@@ -115,7 +117,8 @@
             sort: this.sort,
             priceLte: this.min,
             priceGt: this.max,
-            cid: cid
+            cid: cid,
+            username: this.username
           }
         }
         getAllGoods(params).then(res => {
@@ -157,6 +160,7 @@
       }
     },
     created () {
+      this.username = getStore('username')
     },
     mounted () {
       this.windowHeight = window.innerHeight
@@ -164,7 +168,7 @@
       if (this.$route.query.key) {
         this.key = this.$route.query.key
       } else {
-        this.key = '苹果手机'
+        this.key = 'macbook'
       }
 
       this._getAllGoods()

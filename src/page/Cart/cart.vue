@@ -37,7 +37,7 @@
                       </div>
                       <!--删除按钮-->
                       <div class="operation">
-                        <a class="items-delete-btn" @click="cartdel(item.productId)"></a>
+                        <a class="items-delete-btn" @click="cartDel(item.productId)"></a>
                       </div>
                       <!--商品数量-->
                       <div>
@@ -228,7 +228,7 @@
         this._cartEdit(this.username, productId, productNum, checked)
       },
       // 删除整条购物车
-      cartdel (productId) {
+      cartDel (productId) {
         cartDel({username: this.username, productId}).then(res => {
           this.EDIT_CART({productId})
         })

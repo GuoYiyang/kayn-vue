@@ -65,7 +65,7 @@ export const cancelOrder = (params) => {
 }
 // 商品详情
 export const productDet = (params) => {
-  return http.fetchGet('/api/goods/productDet', params)
+  return http.fetchPost('/api/goods/productDet', params)
 }
 // 删除订单
 export const delOrder = (params) => {

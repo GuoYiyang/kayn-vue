@@ -47,7 +47,7 @@
               <div class="prod-operation pa" style="right: 0;top: 0;">
                 <div class="total">¥ {{item.orderTotal}}</div>
                 <div v-if="item.orderStatus === 0">
-                  <el-button @click="orderPayment(item.orderId)" type="primary" size="small">现在付款</el-button>
+                  <el-button @click="orderPayment(item.orderId, item.orderTotal)" type="primary" size="small">现在付款</el-button>
                 </div>
                 <div class="status" v-if="item.orderStatus !== 0">
                   <el-tag>{{getOrderStatus(item.orderStatus)}} </el-tag>
@@ -107,13 +107,17 @@ import {orderList, delOrder, payOrder} from '@/api/goods'
         this.currentPage = val
         this._orderList()
       },
-      orderPayment (orderId) {
+      orderPayment (orderId, orderTotal) {
         this.$confirm('确定支付吗?', '付款', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          payOrder({orderId: orderId})
+          payOrder({
+            orderId: orderId,
+            orderTotal: orderTotal,
+            username: this.username
+          })
           location.reload();
         })
       },

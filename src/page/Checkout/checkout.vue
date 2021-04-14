@@ -193,7 +193,7 @@
         })
       },
       goodsDetails (id) {
-        window.open(window.location.origin + '#/goodsDetails?productId=' + id)
+        window.open('//' + window.location.host + '/goodsDetails?productId=' + id)
       },
       _getCartList () {
         getCartList({username: this.username}).then(res => {
@@ -322,7 +322,10 @@
         this._addressDel({addressId})
       },
       _productDet (productId) {
-        productDet({params: {productId}}).then(res => {
+        productDet({
+          productId: productId,
+          username: this.username
+        }).then(res => {
           let item = res.result
           item.checked = 1
           item.productImg = item.productImageBig
