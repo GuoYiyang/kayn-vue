@@ -167,8 +167,6 @@
       this.windowWidth = window.innerWidth
       if (this.$route.query.key) {
         this.key = this.$route.query.key
-      } else {
-        this.key = 'macbook'
       }
 
       this._getAllGoods()
