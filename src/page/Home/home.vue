@@ -13,7 +13,7 @@
       </div>
       <div class="page">
         <ul class="dots">
-          <li class="dot-active" v-for="(item, i) in banner" :class="{ 'dot':i!=mark }" :key="i" @click="change(i)"></li>
+          <li class="dot-active" v-for="(item, i) in banner" :class="{ 'dot':i!==mark }" :key="i" @click="change(i)"></li>
         </ul>
       </div>
     </div>
@@ -38,17 +38,6 @@
         </y-shelf>
       </section>
 
-      <section class="w mt30 clearfix" v-if="item.type === 3">
-        <y-shelf :title="item.name">
-          <div slot="content" class="floors" >
-            <div class="imgbanner" v-for="(iitem,j) in item.panelContents" :key="j" v-if="iitem.type === 2 || iitem.type === 3" @click="linkTo(iitem)">
-              <img :src="iitem.picUrl">
-              <a class="cover-link"></a>
-            </div>
-            <mall-goods :msg="iitem" v-for="(iitem,j) in item.panelContents" :key="j+'key'" v-if="iitem.type != 2 && iitem.type != 3"></mall-goods>
-          </div>
-        </y-shelf>
-      </section>
 
       </div>
     </div>
@@ -118,7 +107,7 @@
         clearInterval(this.timer)
       },
       linkTo (item) {
-        if (item.type === 0 || item.type === 2) {
+        if (item.type === 2) {
           // 关联商品
           this.$router.push({
             path: '/goodsDetails',
@@ -168,7 +157,12 @@
       }
     },
     mounted () {
-      productHome().then(res => {
+      let params = {
+        params: {
+          username: getStore('username')
+        }
+      }
+      productHome(params).then(res => {
         if (res.success === false) {
           this.error = true
           return

@@ -342,6 +342,7 @@
         loginOut(params).then(res => {
           removeStore('buyCart')
           removeStore('token')
+          removeStore("username")
           window.location.href = '/'
         })
       },

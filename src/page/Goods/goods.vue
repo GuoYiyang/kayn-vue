@@ -37,26 +37,26 @@
           <img src="/static/images/no-search.png">
           <br> 抱歉！暂时还没有该商品...
         </div>
-<!--        <section class="section">-->
-<!--          <y-shelf :title="recommendPanel.name">-->
-<!--            <div slot="content" class="recommend">-->
-<!--              <mall-goods :msg="item" v-for="(item,i) in recommendPanel.panelContents" :key="i"></mall-goods>-->
-<!--            </div>-->
-<!--          </y-shelf>-->
-<!--        </section>-->
+        <section class="section">
+          <y-shelf :title="recommendPanel.name">
+            <div slot="content" class="hot">
+              <mall-goods :msg="item" v-for="(item,i) in recommendPanel.panelContents" :key="i"></mall-goods>
+            </div>
+          </y-shelf>
+        </section>
       </div>
       <div class="no-info" v-if="error">
         <div class="no-data">
           <img src="/static/images/error.png">
           <br> 抱歉！出错了,请稍等后重试...
         </div>
-<!--        <section class="section">-->
-<!--          <y-shelf :title="recommendPanel.name">-->
-<!--            <div slot="content" class="recommend">-->
-<!--              <mall-goods :msg="item" v-for="(item,i) in recommendPanel.panelContents" :key="i"></mall-goods>-->
-<!--            </div>-->
-<!--          </y-shelf>-->
-<!--        </section>-->
+        <section class="section">
+          <y-shelf :title="recommendPanel.name">
+            <div slot="content" class="hot">
+              <mall-goods :msg="item" v-for="(item,i) in recommendPanel.panelContents" :key="i"></mall-goods>
+            </div>
+          </y-shelf>
+        </section>
       </div>
     </div>
   </div>
@@ -168,9 +168,13 @@
       if (this.$route.query.key) {
         this.key = this.$route.query.key
       }
-
       this._getAllGoods()
-      recommend().then(res => {
+      let params = {
+        params: {
+          username: getStore('username')
+        }
+      }
+      recommend(params).then(res => {
         let data = res.result
         this.recommendPanel = data[0]
       })
@@ -224,7 +228,13 @@
       }
     }
   }
-
+  .hot {
+    display: flex;
+    > div {
+      flex: 1;
+      width: 25%;
+    }
+  }
   .goods-box {
     > div {
       float: left;

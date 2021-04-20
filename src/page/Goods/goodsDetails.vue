@@ -58,6 +58,13 @@
         </div>
       </y-shelf>
     </div>
+    <div class="item-info">
+      <y-shelf :title="recommendPanel.name">
+        <div slot="content" class="hot">
+          <mall-goods :msg="item" v-for="(item,i) in recommendPanel.panelContents" :key="i"></mall-goods>
+        </div>
+      </y-shelf>
+    </div>
   </div>
 </template>
 <script>
@@ -66,7 +73,9 @@
   import YShelf from '@/components/shelf'
   import BuyNum from '@/components/buynum'
   import YButton from '@/components/YButton'
+  import mallGoods from '@/components/mallGoods'
   import { getStore } from '@/utils/storage'
+  import {recommend} from "@/api";
   export default {
     data () {
       return {
@@ -77,7 +86,8 @@
           salePrice: 0
         },
         productNum: 1,
-        username: ''
+        username: '',
+        recommendPanel: [],
       }
     },
     computed: {
@@ -146,12 +156,23 @@
       }
     },
     components: {
-      YShelf, BuyNum, YButton
+      YShelf, BuyNum, YButton, mallGoods
     },
     created () {
       let id = this.$route.query.productId
       this._productDet(id)
       this.username = getStore('username')
+    },
+    mounted() {
+      let params = {
+        params: {
+          username: getStore('username')
+        }
+      }
+      recommend(params).then(res => {
+        let data = res.result
+        this.recommendPanel = data[0]
+      })
     }
   }
 </script>
@@ -165,7 +186,13 @@
   padding: 0 0 25px;
   margin: 0 auto;
 }
-
+.hot {
+  display: flex;
+  > div {
+    flex: 1;
+    width: 25%;
+  }
+}
 .gray-box {
   display: flex;
   padding: 60px;
