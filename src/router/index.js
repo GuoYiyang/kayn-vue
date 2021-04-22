@@ -22,10 +22,26 @@ const routes = [
     component: Index,
     name: 'index',
     redirect: '/home',
+    meta:{
+      title: '首页'
+    },
     children: [
-      {path: 'home', component: Home},
+      {
+        path: 'home',
+        component: Home,
+        meta:{
+          title: 'Kayn商城'
+        }
+      },
       {path: 'goods', component: GoodS},
-      {path: 'goodsDetails', name: 'goodsDetails', component: goodsDetails},
+      {
+        path: 'goodsDetails',
+        name: 'goodsDetails',
+        component: goodsDetails,
+        meta:{
+          title: '商品详情页'
+        }
+      },
       {path: '/refreshgoods', name: 'refreshgoods', component: RefreshGoods},
       {path: '/cart', name: 'cart', component: Cart},
       {path: '/checkout', name: 'checkout', component: checkout},

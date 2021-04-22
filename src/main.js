@@ -11,6 +11,9 @@ Vue.config.productionTip = false
 // 不需要登陆的页面
 const whiteList = ['/home', '/goods', '/login', '/register', '/goodsDetails', '/refreshgoods']
 router.beforeEach(function (to, from, next) {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
   let params = {
     params: {
       token: getStore('token')

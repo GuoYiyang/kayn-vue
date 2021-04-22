@@ -308,7 +308,7 @@
       // 删除商品
       delGoods (productId) {
         if (this.login) { // 登陆了
-          cartDel({userId: getStore('userId'), productId}).then(res => {
+          cartDel({username: getStore('username'), productId}).then(res => {
             this.EDIT_CART({productId})
           })
         } else {
