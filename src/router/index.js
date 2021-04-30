@@ -33,7 +33,12 @@ const routes = [
           title: 'Kayn商城'
         }
       },
-      {path: 'goods', component: GoodS},
+      {
+        path: 'goods',
+        component: GoodS,
+        meta:{
+          title: '全部商品'
+        }},
       {
         path: 'goodsDetails',
         name: 'goodsDetails',
@@ -43,8 +48,20 @@ const routes = [
         }
       },
       {path: '/refreshgoods', name: 'refreshgoods', component: RefreshGoods},
-      {path: '/cart', name: 'cart', component: Cart},
-      {path: '/checkout', name: 'checkout', component: checkout},
+      {
+        path: '/cart',
+        name: 'cart',
+        component: Cart,
+        meta:{
+          title: '我的购物车'
+        }},
+      {
+        path: '/checkout',
+        name: 'checkout',
+        component: checkout,
+        meta:{
+          title: '我的订单'
+        }},
     ]
   },
   {
@@ -59,7 +76,14 @@ const routes = [
       {path: 'addressList', name: '收货地址', component: addressList},
     ]
   },
-  {path: '/login', name: 'login', component: Login},
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta:{
+      title: '登录页'
+    }
+  },
   {path: '/register', name: 'register', component: Register},
   {path: '*', redirect: '/home'}
 
