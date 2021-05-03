@@ -99,6 +99,7 @@
       handleCurrentChange (val) {
         this.currentPage = val
         this._getAllGoods()
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
         this.loading = true
       },
       _getAllGoods () {
